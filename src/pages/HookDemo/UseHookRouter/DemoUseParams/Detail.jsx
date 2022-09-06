@@ -24,7 +24,7 @@ export default function Detail() {
   useEffect(() => {
     //callapi
     getProductDetailApi();
-  }, []);
+  }, [params.id]);
 
   return (
     <div className="container">
