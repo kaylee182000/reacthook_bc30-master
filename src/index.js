@@ -24,16 +24,26 @@ import "antd/dist/antd.css";
 import "./assets/scss/styles.scss";
 import AntdDemo from "./pages/AntdDemo/AntdDemo";
 import Login from "./pages/Login/Login";
+
+//Cau hinh history chuyen huong (chuyen huong khong can hook navigate)
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import Profile from "./pages/Profile/Profile";
+
+export const history = createBrowserHistory({ window });
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
         <Route path="" element={<App />}>
           <Route index element={<Home />}></Route>
           <Route path="detail">
             <Route path=":id" element={<Detail />}></Route>
           </Route>
+          <Route path="profile" element={<Profile />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="search" element={<DemoUseSearchParam />}></Route>
           <Route path="usestate" element={<UseStateDemo />}></Route>
@@ -48,7 +58,7 @@ root.render(
           <Route path="antd" element={<AntdDemo />}></Route>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   </Provider>
 );
 

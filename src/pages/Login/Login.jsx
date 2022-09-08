@@ -1,8 +1,11 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginApi } from "../../redux/reducers/userReducer";
 
 export default function Login(props) {
+  const dispatch = useDispatch();
   //lay du lieu tu form
   const frm = useFormik({
     initialValues: {
@@ -10,17 +13,26 @@ export default function Login(props) {
       email: "",
       password: "",
     },
+
     validationSchema: Yup.object().shape({
-      email: Yup.string().required("email khong duoc bo trong").email("email khong dung dinh dang"),
-      password: Yup.string().required("password khong duoc bo trong").min(6,"pass tu 6-32").max(32,"pass tu 6-32"),
+      email: Yup.string()
+        .required("email khong duoc bo trong")
+        .email("email khong dung dinh dang"),
+      password: Yup.string()
+        .required("password khong duoc bo trong")
+        .min(1, "pass tu 1-32")
+        .max(32, "pass tu 1-32"),
     }),
+
     onSubmit: (values) => {
-      console.log(values);
+      //console.log(values);
+      const action = loginApi(values);
+      dispatch(action);
     },
   });
   return (
     <form className="container" onSubmit={frm.handleSubmit}>
-      <h3>Login</h3>
+      <h3>Login2</h3>
       <div className="form-group">
         <p>email</p>
         <input
