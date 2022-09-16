@@ -46,8 +46,11 @@ export default function HeaderHome() {
                 Login
               </NavLink>
             </li>
+            <li className="nav-item">{renderLoginNavItem()}</li>
             <li className="nav-item">
-              {renderLoginNavItem()}
+              <NavLink className="nav-link" to="/hoc">
+                HOC demo
+              </NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/antd">
