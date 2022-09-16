@@ -1,3 +1,4 @@
+import axios from "axios";
 export const config = {
   setCookie: (name, value, days) => {
     var expires = "";
@@ -56,3 +57,18 @@ export const {
   ACCESS_TOKEN,
   USER_LOGIN,
 } = config;
+
+/*Cau hinh request cho tat ca api response cho tat ca kqua tra tu api tra ve */
+axios.interceptors.request.use(
+  (config) => {
+    const token = getStore(ACCESS_TOKEN);
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
+    }
+    // config.headers['Content-Type'] = 'application/json';
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
