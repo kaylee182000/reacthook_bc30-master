@@ -51,10 +51,7 @@ export const getProductDetail = (id) => {
   return async (dispatch) => {
     //Buoc 2: Thuc thi thunk
     try {
-      let result = await axios({
-        url: `https://shop.cyberlearn.vn/api/Product/getbyid?id=${id}`,
-        method: "GET",
-      });
+      let result = await http.get(`/product/getbyid?id=${id}`);
       //Buoc 3: Sau khi co du lieu dispatch lan 2
       const action = getDetail(result.data.content);
       dispatch(action);
