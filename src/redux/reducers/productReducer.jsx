@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { http } from "../../util/tool";
+
 const initialState = {
   arrProduct: [],
   productDetail: {},
@@ -34,10 +36,7 @@ export default productReducer.reducer;
 export const getProductApi = () => {
   return async (dispatch) => {
     try {
-      const result = await axios({
-        url: "https://shop.cyberlearn.vn/api/product",
-        method: "get",
-      });
+      const result = await http.get("/product");
       //sau khi lay du lieu tu api ve thi set State
       //setArrProduct(result.data.content);
       const action = getProduct(result.data.content);

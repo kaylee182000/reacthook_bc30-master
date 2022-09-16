@@ -58,13 +58,25 @@ export const {
   USER_LOGIN,
 } = config;
 
+const DOMAIN = "https://shop.cyberlearn.vn/api";
+const TOKEN_CYBERSOFT =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMCIsIkhldEhhblN0cmluZyI6IjE3LzAyLzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY3NjU5MjAwMDAwMCIsIm5iZiI6MTY0ODIyNzYwMCwiZXhwIjoxNjc2NzM5NjAwfQ.aK-3RvHXQyu6H2-FFiafeSKR4UMCcRmnuDbTT-XIcUU";
 /*Cau hinh request cho tat ca api response cho tat ca kqua tra tu api tra ve */
-axios.interceptors.request.use(
+//coi lai interceptor
+//Cau hinh domain
+export const http = axios.create({
+  baseURL: DOMAIN,
+  timeout: 30000,
+});
+
+http.interceptors.request.use(
   (config) => {
     const token = getStore(ACCESS_TOKEN);
-    if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
-    }
+    config.headers = {
+      ...config.headers,
+      ["Authorization"]: `Bearer ${token}`,
+      ["TokenCybersoft"]: TOKEN_CYBERSOFT,
+    };
     // config.headers['Content-Type'] = 'application/json';
     return config;
   },
