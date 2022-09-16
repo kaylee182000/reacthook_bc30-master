@@ -1,4 +1,5 @@
 import axios from "axios";
+import { history } from "../index";
 export const config = {
   setCookie: (name, value, days) => {
     var expires = "";
@@ -84,3 +85,32 @@ http.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+//cau hinh kqua tra ve
+http.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (err) => {
+    if ((err.response.status === 400) | (err.response.status === 404)) {
+      history.push("/");
+      return Promise.reject(err);
+    }
+    if ((err.response.status === 401) | (err.response.status === 403)) {
+      alert("Token khong hop le vui long dang nhap lai");
+      history.push("/login");
+      return Promise.reject(err);
+    }
+  }
+);
+
+/**
+ * status code
+ * 400: tham so gui len khong hop le => ket qua khong tim duoc (Bad Request)
+ * 404: tham so gui len nhung khong tim thay => co the bi xoa r (Not Found)
+ * 200: thanh cong,OK...,
+ * 201: Da duoc tao thanh cong => (Minh da tao roi sau do request tiep thi se tra 201)
+ * 401: Khong co quyen truy cap vap api do (Unauthorized - co the do token khong hop le hoac do bi admu chan)
+ * 403: Chua du quyen truy cap vao api do (Forbiden - token hop le tuy nhien token do chua du quyen truy cap vao api)
+ * 500: Loi xay ra tai server (Nguyen nhan co the FrontEnd gui du lieu khong hop le => backend trong qua trinh xu ly code gay ra loi hoac do backend code bi loi => Error in Server)
+ */

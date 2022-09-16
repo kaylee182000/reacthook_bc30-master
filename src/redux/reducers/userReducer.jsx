@@ -4,6 +4,7 @@ import {
   ACCESS_TOKEN,
   getStore,
   getStoreJson,
+  http,
   setCookie,
   setStore,
   setStoreJson,
@@ -33,11 +34,7 @@ export const loginApi = (userLogin) => {
   //{email,password}
   return async (dispatch) => {
     try {
-      const result = await axios({
-        url: "https://shop.cyberlearn.vn/api/Users/signin",
-        method: "POST",
-        data: userLogin,
-      });
+      const result = await http.post("/users/signin", userLogin);
 
       //sau khi dang nhap thanh cong => luu du lieu vao localStorage hoac cookie
       console.log(result);
@@ -58,14 +55,7 @@ export const loginApi = (userLogin) => {
 export const getProfileApi = (accessToken = getStore(ACCESS_TOKEN)) => {
   return async (dispatch) => {
     try {
-      const result = await axios({
-        url: "https://shop.cyberlearn.vn/api/Users/getProfile",
-        method: "POST",
-        headers: {
-          //headers la cac phan du lieu mac dinh gui di
-          Authorization: "Bearer " + accessToken,
-        },
-      });
+      const result = await http.post("/users/getProfile");
       //lay duoc thong tin profile => dua len redux
       const action = getProfileAction(result.data.content);
       dispatch(action);
