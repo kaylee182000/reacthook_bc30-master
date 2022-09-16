@@ -29,6 +29,7 @@ import Login from "./pages/Login/Login";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Profile from "./pages/Profile/Profile";
+import HocDemo from "./pages/HOCDemo/HocDemo";
 
 export const history = createBrowserHistory({ window });
 
@@ -56,6 +57,7 @@ root.render(
           <Route path="reduxfbapp" element={<DemoFaceBookApp />}></Route>
           <Route path="logindemo" element={<LoginDemo />}></Route>
           <Route path="antd" element={<AntdDemo />}></Route>
+          <Route path="hoc" element={<HocDemo />}></Route>
         </Route>
       </Routes>
     </HistoryRouter>
